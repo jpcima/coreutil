@@ -1,6 +1,8 @@
 #pragma once
 #include <utility>
 
+namespace coreutil {
+
 template <class T>
 class tagged_ptr {
  public:
@@ -11,16 +13,16 @@ class tagged_ptr {
   static constexpr unsigned tag_bits = 2;
   static constexpr tag_type tag_min = 0, tag_max = (1 << tag_bits) - 1;
 
-  tagged_ptr();
-  tagged_ptr(std::nullptr_t);
-  tagged_ptr(const tagged_ptr &other);
-  template <class U> tagged_ptr(const tagged_ptr<U> &other);
-  tagged_ptr(pointer ptr);
+  tagged_ptr() noexcept;
+  tagged_ptr(std::nullptr_t) noexcept;
+  tagged_ptr(const tagged_ptr &other) noexcept;
+  template <class U> tagged_ptr(const tagged_ptr<U> &other) noexcept;
+  tagged_ptr(pointer ptr) noexcept;
 
-  tagged_ptr &operator=(std::nullptr_t);
-  tagged_ptr &operator=(const tagged_ptr &other);
-  template <class U> tagged_ptr &operator=(const tagged_ptr<U> &other);
-  tagged_ptr &operator=(pointer ptr);
+  tagged_ptr &operator=(std::nullptr_t) noexcept;
+  tagged_ptr &operator=(const tagged_ptr &other) noexcept;
+  template <class U> tagged_ptr &operator=(const tagged_ptr<U> &other) noexcept;
+  tagged_ptr &operator=(pointer ptr) noexcept;
 
   void reset(pointer ptr) noexcept;
   pointer get() const noexcept;
@@ -37,5 +39,7 @@ class tagged_ptr {
  private:
   pointer ptr_ = nullptr;
 };
+
+}  // namespace coreutil
 
 #include "tagged_ptr.tcc"

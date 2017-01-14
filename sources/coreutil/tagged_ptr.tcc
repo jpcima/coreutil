@@ -3,51 +3,53 @@
 #include <stdexcept>
 #include <cstdint>
 
+namespace coreutil {
+
 template <class T>
-tagged_ptr<T>::tagged_ptr() {
+tagged_ptr<T>::tagged_ptr() noexcept {
 }
 
 template <class T>
-tagged_ptr<T>::tagged_ptr(std::nullptr_t) {
+tagged_ptr<T>::tagged_ptr(std::nullptr_t) noexcept {
 }
 
 template <class T>
-tagged_ptr<T>::tagged_ptr(const tagged_ptr &other)
+tagged_ptr<T>::tagged_ptr(const tagged_ptr &other) noexcept
     : ptr_(other.ptr_) {
 }
 
 template <class T>
 template <class U>
-tagged_ptr<T>::tagged_ptr(const tagged_ptr<U> &other)
+tagged_ptr<T>::tagged_ptr(const tagged_ptr<U> &other) noexcept
     : ptr_(other.ptr_) {
 }
 
 template <class T>
-tagged_ptr<T>::tagged_ptr(pointer ptr)
+tagged_ptr<T>::tagged_ptr(pointer ptr) noexcept
     : ptr_(ptr) {
 }
 
 template <class T>
-auto tagged_ptr<T>::operator=(std::nullptr_t) -> tagged_ptr & {
+auto tagged_ptr<T>::operator=(std::nullptr_t) noexcept -> tagged_ptr & {
   ptr_ = nullptr;
   return *this;
 }
 
 template <class T>
-auto tagged_ptr<T>::operator=(const tagged_ptr &other) -> tagged_ptr & {
+auto tagged_ptr<T>::operator=(const tagged_ptr &other) noexcept -> tagged_ptr & {
   ptr_ = other.ptr_;
   return *this;
 }
 
 template <class T>
 template <class U>
-auto tagged_ptr<T>::operator=(const tagged_ptr<U> &other) -> tagged_ptr & {
+auto tagged_ptr<T>::operator=(const tagged_ptr<U> &other) noexcept -> tagged_ptr & {
   ptr_ = other.ptr_;
   return *this;
 }
 
 template <class T>
-auto tagged_ptr<T>::operator=(pointer ptr) -> tagged_ptr & {
+auto tagged_ptr<T>::operator=(pointer ptr) noexcept-> tagged_ptr & {
   ptr_ = ptr;
   return *this;
 }
@@ -95,3 +97,5 @@ template <class T>
 auto tagged_ptr<T>::operator->() const noexcept -> pointer {
   return get();
 }
+
+}  // namespace coreutil
