@@ -18,12 +18,12 @@ struct StdioDefaultFileTraits {
 
 template <class Traits>
 BasicStdioFile<Traits>::BasicStdioFile()
-    : handle_(nullptr, [](FILE *f) -> int { return f ? ::fclose(f) : 0; }) {
+    : handle_(nullptr, &::fclose) {
 }
 
 template <class Traits>
 BasicStdioFile<Traits>::BasicStdioFile(const char *path, const char *mode)
-    : handle_(nullptr, [](FILE *f) -> int { return f ? ::fclose(f) : 0; }) {
+    : handle_(nullptr, &::fclose) {
   FILE *handle = Traits::open(path, mode);
   if (!handle)
     throw std::system_error(errno, std::system_category());
@@ -32,7 +32,7 @@ BasicStdioFile<Traits>::BasicStdioFile(const char *path, const char *mode)
 
 template <class Traits>
 BasicStdioFile<Traits>::BasicStdioFile(int fd, const char *mode, bool owned)
-    : handle_(nullptr, [](FILE *f) -> int { return f ? ::fclose(f) : 0; }) {
+    : handle_(nullptr, &::fclose) {
   if (owned) {
     fd = ::dup(fd);
     if (fd == -1)
@@ -50,7 +50,7 @@ BasicStdioFile<Traits>::BasicStdioFile(int fd, const char *mode, bool owned)
 
 template <class Traits>
 BasicStdioFile<Traits>::BasicStdioFile(const char *path, int oflag, int omode)
-    : handle_(nullptr, [](FILE *f) -> int { return f ? ::fclose(f) : 0; }) {
+    : handle_(nullptr, &::fclose) {
   int fd = ::open(path, oflag, omode);
   if (fd == -1)
     throw std::system_error(errno, std::system_category());
@@ -292,8 +292,7 @@ auto BasicStdioFile<Traits>::command(const char *command, const char *mode) -> B
   FILE *handle = ::popen(command, mode);
   if (!handle)
     throw std::system_error(errno, std::system_category());
-  file.handle_ = std::unique_ptr<FILE, int(*)(FILE *)>(
-      handle, [](FILE *f) -> int { return f ? ::pclose(f) : 0; });
+  file.handle_ = std::unique_ptr<FILE, int(*)(FILE *)>(handle, &::pclose);
   return file;
 }
 
