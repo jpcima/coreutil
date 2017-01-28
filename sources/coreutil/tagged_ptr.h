@@ -24,7 +24,7 @@ class tagged_ptr {
   template <class U> tagged_ptr &operator=(const tagged_ptr<U> &other) noexcept;
   tagged_ptr &operator=(pointer ptr) noexcept;
 
-  void reset(pointer ptr) noexcept;
+  void reset(pointer ptr = pointer()) noexcept;
   pointer get() const noexcept;
 
   tag_type tag() const noexcept;
