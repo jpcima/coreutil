@@ -1,6 +1,5 @@
 #pragma once
 #include "simd.h"
-#include <boost/integer.hpp>
 #include <iosfwd>
 #include <cstdint>
 

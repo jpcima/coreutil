@@ -1,5 +1,6 @@
 #pragma once
 #include "../simd.h"
+#include <boost/integer.hpp>
 #include <type_traits>
 
 namespace coreutil {
