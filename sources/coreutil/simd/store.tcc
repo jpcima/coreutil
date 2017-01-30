@@ -28,4 +28,15 @@ inline void simd_storeu(v4sd *p, v4sd x) {
 }
 #endif
 
+#if (defined(__arm__) || defined(__aarch64__)) && defined(__ARM_NEON)
+template <>
+inline void simd_storeu(v4sf *p, v4sf x) {
+  *p = x;
+}
+template <>
+inline void simd_storeu(v2sd *p, v2sd x) {
+  *p = x;
+}
+#endif
+
 }  // namespace coreutil

@@ -28,4 +28,15 @@ inline v4sd simd_loadu(const v4sd *p) {
 }
 #endif
 
+#if (defined(__arm__) || defined(__aarch64__)) && defined(__ARM_NEON)
+template <>
+inline v4sf simd_loadu(const v4sf *p) {
+  return *p;
+}
+template <>
+inline v2sd simd_loadu(const v2sd *p) {
+  return *p;
+}
+#endif
+
 }  // namespace coreutil
