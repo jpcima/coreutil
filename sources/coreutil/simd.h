@@ -8,6 +8,8 @@ static constexpr unsigned simd_register_size = 32;
 static constexpr unsigned simd_register_size = 16;
 #endif
 
+static constexpr unsigned simd_alignment = simd_register_size;
+
 template <class T>
 static constexpr unsigned simd_default_size = simd_register_size / sizeof(T);
 
