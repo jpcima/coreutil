@@ -18,4 +18,18 @@ void pbinit(void *mem, size_t memsize);
 [[gnu::malloc]] void *pbmalloc(void *mem, size_t size) noexcept;
 void pbclear(void *mem) noexcept;
 
+//------------------------------------------------------------------------------
+// aligned allocator
+//------------------------------------------------------------------------------
+[[gnu::malloc]] void *almalloc(size_t al, size_t size) noexcept;
+void alfree(void *p);
+
+struct aligned;
+template <class T> struct aligned_delete;
+
 }  // namespace coreutil
+
+void *operator new(size_t size, coreutil::aligned al);
+void *operator new[](size_t size, coreutil::aligned al);
+
+#include "memory.tcc"
