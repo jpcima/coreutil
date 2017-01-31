@@ -6,7 +6,7 @@ namespace coreutil {
 // math constants
 //------------------------------------------------------------------------------
 
-// This file provides math constants computed with 21 significant numbers,
+// This file provides math constants computed with 21 significant digits,
 // which provides the maximum precision of IEEE quad floating-point numbers.
 
 // The constants are defined more strictly than by usual C standards. The result
