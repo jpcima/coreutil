@@ -45,10 +45,8 @@ int main() {
 
   for (const MPConstant &c: constants) {
     std::cout << "#define " <<
-        boost::format("K_%s%|15t|::coreutil::math_constant(%s)%|70t|// %s\n")
-        % c.name
-        % (c.value.str(std::numeric_limits<long double>::max_digits10) + 'L')
-        % c.expr;
+        boost::format("K_%s%|15t|::coreutil::math_constant(%s)%|85t|// %s\n")
+        % c.name % (c.value.str(36) + 'L') % c.expr;
   }
 
   return 0;
