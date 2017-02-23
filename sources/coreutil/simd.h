@@ -25,7 +25,7 @@ using simd_t = typename simd_class<T, N>::type;
 template <class V> using simd_element_type = typename simd_traits<V>::element_type;
 template <class V> static constexpr unsigned simd_size = simd_traits<V>::size;
 
-template <class V> V simd_pack(simd_element_type<V> x);
+template <class V> constexpr V simd_pack(simd_element_type<V> x);
 
 template <class V> V simd_abs(V x);
 

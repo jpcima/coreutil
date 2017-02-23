@@ -5,6 +5,9 @@
 
 namespace coreutil {
 
+namespace simd_detail { template <class T, unsigned N> struct pack_impl; }
+///
+
 #define SIMD_FOREACH_VECTOR_SIZE(F, ...)         \
   F(2, ##__VA_ARGS__) F(4,  ##__VA_ARGS__)       \
   F(8, ##__VA_ARGS__) F(16, ##__VA_ARGS__)       \
@@ -42,17 +45,10 @@ namespace coreutil {
 
 SIMD_FOREACH_VECTOR_SIZE(SIMD_DEFINE_FOR_SIZE);
 
-#undef SIMD_FOREACH_VECTOR_SIZE
-#undef SIMD_FOREACH_TYPE_PAIR
-#undef SIMD_DEFINE
-#undef SIMD_DEFINE_FOR_SIZE
-
 template <class V>
-inline V simd_pack(simd_element_type<V> x) {
-  V r {};
-  for (unsigned i = 0; i < simd_size<V>; ++i)
-    r[i] = x;
-  return r;
+inline constexpr V simd_pack(simd_element_type<V> x) {
+  simd_detail::pack_impl<simd_element_type<V>, simd_size<V>> impl;
+  return impl(x);
 }
 
 template <class V>
@@ -73,7 +69,13 @@ inline simd_element_type<V> simd_product(V x) {
 
 }  // namespace coreutil
 
+#include "simd/pack.tcc"
 #include "simd/load.tcc"
 #include "simd/store.tcc"
 #include "simd/abs.tcc"
 #include "simd/mul_add.tcc"
+
+#undef SIMD_FOREACH_VECTOR_SIZE
+#undef SIMD_FOREACH_TYPE_PAIR
+#undef SIMD_DEFINE
+#undef SIMD_DEFINE_FOR_SIZE
