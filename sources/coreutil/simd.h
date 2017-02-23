@@ -34,6 +34,7 @@ template <class V> simd_element_type<V> simd_product(V x);
 
 template <class V> V simd_mul_add(V a, V b, V c);
 template <class V> V simd_mul_neg_add(V a, V b, V c);
+template <class V> V simd_mul_hi(V a, V b);
 
 template <class V> V simd_loadu(const V *p);
 template <class V> void simd_storeu(V *p, V x);

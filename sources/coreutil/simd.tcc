@@ -74,6 +74,7 @@ inline simd_element_type<V> simd_product(V x) {
 #include "simd/store.tcc"
 #include "simd/abs.tcc"
 #include "simd/mul_add.tcc"
+#include "simd/mul_hi.tcc"
 
 #undef SIMD_FOREACH_VECTOR_SIZE
 #undef SIMD_FOREACH_TYPE_PAIR
